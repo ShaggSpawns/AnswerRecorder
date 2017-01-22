@@ -21,32 +21,26 @@ namespace AnswerRecorder
         {
             this.exam = exam;
             InitializeComponent();
+            UpdateUIConfig();
         }
 
-        private void cbExamType_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateUIConfig()
         {
-            switch ((ExamType)cbExamType.SelectedIndex)
-            {
-                case ExamType.ACT:
-                    break;
-                case ExamType.WYSE:
-                    break;
-                case ExamType.SAT:
-                    break;
-                case ExamType.Custom:
-                    gbCustomExam.Enabled = true;
-                    break;
-                default:
-                    break;
-            }
+            lbPDF.Text = $"PDF: [ {(exam.PDFPath.Equals("") ? "none" : exam.PDFPath.Substring(exam.PDFPath.LastIndexOf('\\') + 1))} ]";
+            lbAnswers.Text = $"Answers: [ {(exam.AnswersPath.Equals("") ? "none" : exam.AnswersPath.Substring(exam.AnswersPath.LastIndexOf('\\') + 1))} ]";
+            tbNumChoices.Text = exam.NumChoices.ToString();
+            tbNumQuestions.Text = exam.NumQuestions > 0 ? exam.NumQuestions.ToString() : "";
+            checkbMultiSelect.Checked = exam.AllowMultiSelect;
+            tbChoiceSequence.Text = exam.ChoiceSequence;
+            tbNumSections.Text = exam.NumSections.ToString();
         }
 
         private void btnExamPDF_Click(object sender, EventArgs e)
         {
             if (ofdExamPDF.ShowDialog() == DialogResult.OK)
             {
-                exam.PathPDF = ofdExamPDF.FileName;
-                lbExamPDF.Text = $"Selected: [ {exam.PathPDF.Substring(exam.PathPDF.LastIndexOf('\\') + 1)} ]";
+                exam.PDFPath = ofdExamPDF.FileName;
+                UpdateUIConfig();
             }
         }
 
@@ -54,10 +48,10 @@ namespace AnswerRecorder
         {
             if (ofdExamAnswers.ShowDialog() == DialogResult.OK)
             {
-                lbExamAnswers.Text = exam.PathAnswers = ofdExamAnswers.FileName;
-                lbExamAnswers.Text = $"Selected: [ {exam.PathAnswers.Substring(exam.PathAnswers.LastIndexOf('\\') + 1)} ]";
+                exam.AnswersPath = ofdExamAnswers.FileName;
+                UpdateUIConfig();
 
-                exam.Answers = System.IO.File.ReadAllLines(exam.PathAnswers).ToList();
+                exam.Answers = System.IO.File.ReadAllLines(exam.AnswersPath).ToList();
                 exam.NumQuestions = exam.Answers.Count;
             }
         }
@@ -85,6 +79,47 @@ namespace AnswerRecorder
             {
                 tbNumQuestions.ForeColor = Color.Red;
             }
+        }
+
+
+        private void HandleRadioGroup(ExamType selected)
+        {
+            gbCustomExam.Enabled = selected.Equals(ExamType.Custom);
+
+            switch (selected)
+            {
+                case ExamType.Custom:
+
+                    break;
+                case ExamType.ACT:
+                    break;
+                case ExamType.WYSE:
+                    break;
+                case ExamType.SAT:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void rbCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            HandleRadioGroup(ExamType.Custom);
+        }
+
+        private void rbACT_CheckedChanged(object sender, EventArgs e)
+        {
+            HandleRadioGroup(ExamType.ACT);
+        }
+
+        private void rbSAT_CheckedChanged(object sender, EventArgs e)
+        {
+            HandleRadioGroup(ExamType.SAT);
+        }
+
+        private void rbWYSE_CheckedChanged(object sender, EventArgs e)
+        {
+            HandleRadioGroup(ExamType.WYSE);
         }
     }
 }

@@ -28,15 +28,17 @@ namespace AnswerRecorder
         {
             lbTime.Text = $"Time |  {currentTime / 60 / 60:0} : {currentTime / 60 % 60:00} : {currentTime % 60:00}";
         }
-
+        
         private void AppendResponse(string option)
         {
             responses.Add(option);
 
             if (dgvResponses.Rows.Count > currentQuestion)
             {
-                dgvResponses.Rows[currentQuestion++].Cells[1].Value = option;
-                dgvResponses.FirstDisplayedScrollingRowIndex = currentQuestion - (currentQuestion < 28 ? currentQuestion : 28);
+                dgvResponses.CurrentRow.Cells[1].Value = option;
+                dgvResponses.CurrentCell = dgvResponses[0, ++currentQuestion];
+
+                dgvResponses.FirstDisplayedScrollingRowIndex = currentQuestion - (currentQuestion < 23 ? currentQuestion : 23);
             }
             else
             {
@@ -44,6 +46,12 @@ namespace AnswerRecorder
 
                 dgvResponses.FirstDisplayedScrollingRowIndex = currentQuestion;
             }
+            lbSessionInfo.Text = $"Question {currentQuestion + 1} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
+        }
+
+        private void dgvResponses_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            currentQuestion = dgvResponses.CurrentCell.RowIndex;
             lbSessionInfo.Text = $"Question {currentQuestion + 1} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
         }
 
@@ -62,6 +70,7 @@ namespace AnswerRecorder
                     btnOption5.Enabled = true;
 
                     btnStartStop.Text = "Done";
+                    btnCheck.Enabled = true;
                     break;
 
                 case "Done":
@@ -106,6 +115,7 @@ namespace AnswerRecorder
             AppendResponse(btnOption1.Text);
         }
 
+
         private void btnOption2_Click_1(object sender, EventArgs e)
         {
             AppendResponse(btnOption2.Text);
@@ -135,9 +145,9 @@ namespace AnswerRecorder
             if (loadPopup.Success)
             {
                 panelStart.Visible = false;
-                if (exam.PathPDF != null && !exam.PathPDF.Equals(String.Empty))
+                if (exam.PDFPath != null && !exam.PDFPath.Equals(String.Empty))
                 {
-                    var stream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(exam.PathPDF));
+                    var stream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(exam.PDFPath));
                     PdfDocument pdfDocument = PdfDocument.Load(stream);
                     pdfViewer.Document = pdfDocument;
                     pdfViewer.Visible = true;
@@ -165,27 +175,37 @@ namespace AnswerRecorder
 
         private void saveSesssionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = System.IO.Directory.GetCurrentDirectory() + @"\Saves\";
-            System.IO.Directory.CreateDirectory(path);
-            string file = $"answers {DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}.txt";
-
-            using (System.IO.StreamWriter srFile = new System.IO.StreamWriter(path + file))
+            if (exam.PDFPath != null)
             {
-                foreach (string r in responses)
+                string path = "";
+
+                string file = $"answers {DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}.txt";
+
+                using (System.IO.StreamWriter srFile = new System.IO.StreamWriter(path + file))
                 {
-                    srFile.WriteLine(r);
+                    foreach (string r in responses)
+                    {
+                        srFile.WriteLine(r);
+                    }
+                    srFile.WriteLine("#" + currentTime);
                 }
-                srFile.WriteLine("#" + currentTime);
             }
+            else
+            {
+                string path = System.IO.Directory.GetCurrentDirectory() + @"\Saves\";
+                System.IO.Directory.CreateDirectory(path);
+
+            }
+            
         }
 
         private void btnLoadQuick_Click(object sender, EventArgs e)
         {
             if (ofdExamPDF.ShowDialog() == DialogResult.OK)
             {
-                exam.PathPDF = ofdExamPDF.FileName;
+                exam.PDFPath = ofdExamPDF.FileName;
 
-                var stream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(exam.PathPDF));
+                var stream = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(exam.PDFPath));
 
                 PdfDocument pdfDocument = PdfDocument.Load(stream);
                 pdfViewer.Document = pdfDocument;
@@ -197,7 +217,22 @@ namespace AnswerRecorder
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-
+            int numCorrect = 0;
+            for (int i = 0; i < responses.Count; i++)
+            {
+                if (exam.Answers.Count > i)
+                {
+                    if (responses[i] == exam.Answers[i])
+                    {
+                        numCorrect++;
+                        dgvResponses.Rows[i].DefaultCellStyle.ForeColor = Color.Green;
+                    }
+                    else
+                    {
+                        dgvResponses.Rows[i].DefaultCellStyle.ForeColor = Color.Red;
+                    }
+                }
+            }
         }
 
         private void retrieveExamFilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -207,6 +242,12 @@ namespace AnswerRecorder
                 //client.Credentials = new NetworkCredential("", "Wyse2014");
                 client.DownloadFile("https://wyse.engineering.illinois.edu/files/2015/01/CompSci_Sectional2016.pdf", "CompSci_Sectional2016.pdf");
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if should save
+            Application.Exit();
         }
     }
 }

@@ -8,22 +8,35 @@ namespace AnswerRecorder
 {
     public enum ExamType
     {
+        Custom,
         ACT,
         WYSE,
-        SAT,
-        Custom
+        SAT
     }
 
     public class ExamSession
     {
         public ExamType TypeExam { get; set; }
         public List<string> Answers { get; set; }
+        public string AnswersPath { get; set; }
+        public string PDFPath { get; set; }
+        public int NumSections { get; set; }
         public int NumQuestions { get; set; }
         public int NumChoices { get; set; }
-        public string SequenceChoices { get; set; }
+        public string ChoiceSequence { get; set; }
         public bool AllowMultiSelect { get; set; }
-        public string PathPDF { get; set; }
-        public string PathAnswers { get; set; }
-        public bool Success { get; private set; }
+
+        public ExamSession()
+        {
+            TypeExam = ExamType.Custom;
+            Answers = new List<string>();
+            NumSections = 1;
+            NumQuestions = -1;
+            NumChoices = 5;
+            ChoiceSequence = "";
+            AllowMultiSelect = false;
+            PDFPath = "";
+            AnswersPath = "";
+        }
     }
 }

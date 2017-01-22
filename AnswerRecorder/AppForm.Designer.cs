@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvResponses = new System.Windows.Forms.DataGridView();
             this.QuestionNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Answer = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,7 +43,7 @@
             this.btnOption3 = new System.Windows.Forms.Button();
             this.btnOption2 = new System.Windows.Forms.Button();
             this.btnOption1 = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadExamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSesssionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,7 @@
             this.closeSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.retrieveExamFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wikiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,9 +65,8 @@
             this.btnCheck = new System.Windows.Forms.Button();
             this.lbSessionInfo = new System.Windows.Forms.Label();
             this.lbTime = new System.Windows.Forms.Label();
-            this.retrieveExamFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponses)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.panelStart.SuspendLayout();
             this.panelControls.SuspendLayout();
             this.SuspendLayout();
@@ -80,41 +80,49 @@
             this.dgvResponses.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvResponses.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvResponses.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvResponses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvResponses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvResponses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResponses.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.QuestionNum,
             this.Answer});
+            this.dgvResponses.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvResponses.GridColor = System.Drawing.SystemColors.Control;
             this.dgvResponses.Location = new System.Drawing.Point(12, 27);
             this.dgvResponses.MultiSelect = false;
             this.dgvResponses.Name = "dgvResponses";
+            this.dgvResponses.ReadOnly = true;
             this.dgvResponses.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvResponses.RowHeadersVisible = false;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvResponses.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvResponses.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.dgvResponses.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dgvResponses.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvResponses.Size = new System.Drawing.Size(108, 652);
+            this.dgvResponses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvResponses.Size = new System.Drawing.Size(108, 560);
             this.dgvResponses.TabIndex = 5;
+            this.dgvResponses.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvResponses_CellMouseClick);
             // 
             // QuestionNum
             // 
             this.QuestionNum.HeaderText = "#";
             this.QuestionNum.Name = "QuestionNum";
+            this.QuestionNum.ReadOnly = true;
+            this.QuestionNum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.QuestionNum.Width = 30;
             // 
             // Answer
             // 
             this.Answer.HeaderText = "Answer";
             this.Answer.Name = "Answer";
+            this.Answer.ReadOnly = true;
+            this.Answer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Answer.Width = 60;
             // 
             // btnStartStop
@@ -148,9 +156,10 @@
             this.btnOption5.Enabled = false;
             this.btnOption5.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOption5.ForeColor = System.Drawing.Color.DimGray;
-            this.btnOption5.Location = new System.Drawing.Point(706, 3);
+            this.btnOption5.Location = new System.Drawing.Point(693, 3);
+            this.btnOption5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOption5.Name = "btnOption5";
-            this.btnOption5.Size = new System.Drawing.Size(130, 80);
+            this.btnOption5.Size = new System.Drawing.Size(101, 80);
             this.btnOption5.TabIndex = 11;
             this.btnOption5.Text = "E";
             this.btnOption5.UseVisualStyleBackColor = true;
@@ -161,9 +170,10 @@
             this.btnOption4.Enabled = false;
             this.btnOption4.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOption4.ForeColor = System.Drawing.Color.DimGray;
-            this.btnOption4.Location = new System.Drawing.Point(570, 3);
+            this.btnOption4.Location = new System.Drawing.Point(588, 3);
+            this.btnOption4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOption4.Name = "btnOption4";
-            this.btnOption4.Size = new System.Drawing.Size(130, 80);
+            this.btnOption4.Size = new System.Drawing.Size(101, 80);
             this.btnOption4.TabIndex = 10;
             this.btnOption4.Text = "D";
             this.btnOption4.UseVisualStyleBackColor = true;
@@ -174,9 +184,10 @@
             this.btnOption3.Enabled = false;
             this.btnOption3.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOption3.ForeColor = System.Drawing.Color.DimGray;
-            this.btnOption3.Location = new System.Drawing.Point(434, 3);
+            this.btnOption3.Location = new System.Drawing.Point(483, 3);
+            this.btnOption3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOption3.Name = "btnOption3";
-            this.btnOption3.Size = new System.Drawing.Size(130, 80);
+            this.btnOption3.Size = new System.Drawing.Size(101, 80);
             this.btnOption3.TabIndex = 9;
             this.btnOption3.Text = "C";
             this.btnOption3.UseVisualStyleBackColor = true;
@@ -187,9 +198,10 @@
             this.btnOption2.Enabled = false;
             this.btnOption2.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOption2.ForeColor = System.Drawing.Color.DimGray;
-            this.btnOption2.Location = new System.Drawing.Point(298, 3);
+            this.btnOption2.Location = new System.Drawing.Point(378, 3);
+            this.btnOption2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOption2.Name = "btnOption2";
-            this.btnOption2.Size = new System.Drawing.Size(130, 80);
+            this.btnOption2.Size = new System.Drawing.Size(101, 80);
             this.btnOption2.TabIndex = 8;
             this.btnOption2.Text = "B";
             this.btnOption2.UseVisualStyleBackColor = true;
@@ -200,27 +212,28 @@
             this.btnOption1.Enabled = false;
             this.btnOption1.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOption1.ForeColor = System.Drawing.Color.DimGray;
-            this.btnOption1.Location = new System.Drawing.Point(162, 3);
+            this.btnOption1.Location = new System.Drawing.Point(273, 3);
+            this.btnOption1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOption1.Name = "btnOption1";
-            this.btnOption1.Size = new System.Drawing.Size(130, 80);
+            this.btnOption1.Size = new System.Drawing.Size(101, 80);
             this.btnOption1.TabIndex = 7;
             this.btnOption1.Text = "A";
             this.btnOption1.UseVisualStyleBackColor = true;
             this.btnOption1.Click += new System.EventHandler(this.btnOption1_Click_1);
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.aboutToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1006, 24);
-            this.menuStrip1.TabIndex = 15;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1006, 24);
+            this.menuStrip.TabIndex = 15;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -265,6 +278,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -273,6 +287,13 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Options";
+            // 
+            // retrieveExamFilesToolStripMenuItem
+            // 
+            this.retrieveExamFilesToolStripMenuItem.Name = "retrieveExamFilesToolStripMenuItem";
+            this.retrieveExamFilesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.retrieveExamFilesToolStripMenuItem.Text = "Retrieve Exam Files";
+            this.retrieveExamFilesToolStripMenuItem.Click += new System.EventHandler(this.retrieveExamFilesToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -349,6 +370,7 @@
             // 
             // panelControls
             // 
+            this.panelControls.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panelControls.Controls.Add(this.btnCheck);
             this.panelControls.Controls.Add(this.lbSessionInfo);
             this.panelControls.Controls.Add(this.lbTime);
@@ -358,9 +380,10 @@
             this.panelControls.Controls.Add(this.btnOption1);
             this.panelControls.Controls.Add(this.btnStartStop);
             this.panelControls.Controls.Add(this.btnOption3);
-            this.panelControls.Location = new System.Drawing.Point(133, 593);
+            this.panelControls.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelControls.Location = new System.Drawing.Point(0, 605);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(861, 86);
+            this.panelControls.Size = new System.Drawing.Size(1006, 86);
             this.panelControls.TabIndex = 20;
             // 
             // btnCheck
@@ -395,13 +418,6 @@
             this.lbTime.TabIndex = 12;
             this.lbTime.Text = "Time |  0 : 00 : 00";
             // 
-            // retrieveExamFilesToolStripMenuItem
-            // 
-            this.retrieveExamFilesToolStripMenuItem.Name = "retrieveExamFilesToolStripMenuItem";
-            this.retrieveExamFilesToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.retrieveExamFilesToolStripMenuItem.Text = "Retrieve Exam Files";
-            this.retrieveExamFilesToolStripMenuItem.Click += new System.EventHandler(this.retrieveExamFilesToolStripMenuItem_Click);
-            // 
             // FormApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -411,15 +427,15 @@
             this.Controls.Add(this.panelStart);
             this.Controls.Add(this.pdfViewer);
             this.Controls.Add(this.dgvResponses);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "FormApp";
             this.Text = "AnswerSheet";
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponses)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.panelStart.ResumeLayout(false);
             this.panelStart.PerformLayout();
             this.panelControls.ResumeLayout(false);
@@ -440,9 +456,7 @@
         private System.Windows.Forms.Button btnOption3;
         private System.Windows.Forms.Button btnOption2;
         private System.Windows.Forms.Button btnOption1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn QuestionNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Answer;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -464,6 +478,8 @@
         private System.Windows.Forms.Label lbTime;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.ToolStripMenuItem retrieveExamFilesToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QuestionNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Answer;
     }
 }
 
