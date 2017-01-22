@@ -16,7 +16,7 @@ namespace AnswerRecorder
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new formWindow());
+            Application.Run(new FormApp());
         }
     }
 }

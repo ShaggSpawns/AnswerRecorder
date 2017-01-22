@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnswerRecorder", "AnswerRecorder\AnswerRecorder.csproj", "{CF52230D-83A2-4E72-9AB6-9A30CDF97A71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnswerSheet", "AnswerRecorder\AnswerSheet.csproj", "{CF52230D-83A2-4E72-9AB6-9A30CDF97A71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
