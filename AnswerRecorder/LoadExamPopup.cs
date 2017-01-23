@@ -17,9 +17,9 @@ namespace AnswerRecorder
 
         private ExamSession exam;
 
-        public FormLoadExam(ref ExamSession exam)
+        public FormLoadExam(out ExamSession newExam)
         {
-            this.exam = exam;
+            newExam = exam = new ExamSession();
             InitializeComponent();
             UpdateUIConfig();
         }

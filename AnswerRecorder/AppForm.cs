@@ -19,13 +19,18 @@ namespace AnswerRecorder
         private int currentTime;
         ExamSession exam;
 
-        private void NewSession()
+        private bool checking = false;
+
+        private void NewSession(ExamSession newExam = null)
         {
+            timer.Stop();
+            ToggleOptionBtns(false);
+
             responses = new List<string>();
             currentQuestion = 1;
             currentTime = 0;
-            exam = new ExamSession();
-
+            exam = newExam ?? new ExamSession();
+            
             dgvResponses.Rows.Clear();
             dgvResponses.Refresh();
 
@@ -49,10 +54,11 @@ namespace AnswerRecorder
         
         private void InsertResponse(string option)
         {
-            responses.Add(option);
-
             if (dgvResponses.Rows.Count > currentQuestion)
             {
+                if (responses.Count > currentQuestion)
+                    responses.RemoveAt(currentQuestion - 1);
+                responses.Insert(currentQuestion - 1, option);
                 dgvResponses.CurrentRow.Cells[1].Value = option;
                 dgvResponses.CurrentCell = dgvResponses[0, currentQuestion++];
 
@@ -60,12 +66,20 @@ namespace AnswerRecorder
             }
             else
             {
+                responses.Add(option);
                 dgvResponses.CurrentRow.Cells[1].Value = option;
                 dgvResponses.Rows.Add((++currentQuestion).ToString(), "");
                 dgvResponses.CurrentCell = dgvResponses[0, currentQuestion - 1];
             }
 
             UpdateSessionInfo();
+
+            if (checking)
+            {
+                for (int i = 0; i < responses.Count; i++)
+                    dgvResponses.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
+                checking = false;
+            }
         }
 
         private void dgvResponses_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -126,12 +140,13 @@ namespace AnswerRecorder
 
         private void LoadExam()
         {
-            FormLoadExam loadPopup = new FormLoadExam(ref exam);
-
+            FormLoadExam loadPopup = new FormLoadExam(out ExamSession newExam);
             loadPopup.ShowDialog();
 
             if (loadPopup.Success)
             {
+                NewSession(newExam);
+
                 panelStart.Visible = false;
                 if (exam.PDFPath != null && !exam.PDFPath.Equals(String.Empty))
                 {
@@ -200,6 +215,7 @@ namespace AnswerRecorder
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
+            checking = true;
             int numCorrect = 0;
             for (int i = 0; i < responses.Count; i++)
             {
