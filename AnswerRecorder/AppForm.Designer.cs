@@ -163,7 +163,7 @@
             this.btnOption5.TabIndex = 11;
             this.btnOption5.Text = "E";
             this.btnOption5.UseVisualStyleBackColor = true;
-            this.btnOption5.Click += new System.EventHandler(this.btnOption5_Click_1);
+            this.btnOption5.Click += new System.EventHandler(this.HandleBtnOption_Click);
             // 
             // btnOption4
             // 
@@ -177,7 +177,7 @@
             this.btnOption4.TabIndex = 10;
             this.btnOption4.Text = "D";
             this.btnOption4.UseVisualStyleBackColor = true;
-            this.btnOption4.Click += new System.EventHandler(this.btnOption4_Click_1);
+            this.btnOption4.Click += new System.EventHandler(this.HandleBtnOption_Click);
             // 
             // btnOption3
             // 
@@ -191,7 +191,7 @@
             this.btnOption3.TabIndex = 9;
             this.btnOption3.Text = "C";
             this.btnOption3.UseVisualStyleBackColor = true;
-            this.btnOption3.Click += new System.EventHandler(this.btnOption3_Click_1);
+            this.btnOption3.Click += new System.EventHandler(this.HandleBtnOption_Click);
             // 
             // btnOption2
             // 
@@ -205,7 +205,7 @@
             this.btnOption2.TabIndex = 8;
             this.btnOption2.Text = "B";
             this.btnOption2.UseVisualStyleBackColor = true;
-            this.btnOption2.Click += new System.EventHandler(this.btnOption2_Click_1);
+            this.btnOption2.Click += new System.EventHandler(this.HandleBtnOption_Click);
             // 
             // btnOption1
             // 
@@ -219,7 +219,7 @@
             this.btnOption1.TabIndex = 7;
             this.btnOption1.Text = "A";
             this.btnOption1.UseVisualStyleBackColor = true;
-            this.btnOption1.Click += new System.EventHandler(this.btnOption1_Click_1);
+            this.btnOption1.Click += new System.EventHandler(this.HandleBtnOption_Click);
             // 
             // menuStrip
             // 
@@ -252,7 +252,7 @@
             this.loadExamToolStripMenuItem.Name = "loadExamToolStripMenuItem";
             this.loadExamToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.loadExamToolStripMenuItem.Text = "Load Exam...";
-            this.loadExamToolStripMenuItem.Click += new System.EventHandler(this.loadExamToolStripMenuItem_Click);
+            this.loadExamToolStripMenuItem.Click += new System.EventHandler(this.HandleLoadExam_Click);
             // 
             // saveSesssionToolStripMenuItem
             // 
@@ -337,7 +337,7 @@
             this.btnLoadExam.TabIndex = 16;
             this.btnLoadExam.Text = "Load Exam...";
             this.btnLoadExam.UseVisualStyleBackColor = true;
-            this.btnLoadExam.Click += new System.EventHandler(this.btnLoadExam_Click);
+            this.btnLoadExam.Click += new System.EventHandler(this.HandleLoadExam_Click);
             // 
             // btnLoadQuick
             // 

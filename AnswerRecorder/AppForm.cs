@@ -14,45 +14,73 @@ namespace AnswerRecorder
 {
     public partial class FormApp : Form
     {
-        private List<string> responses = new List<string>();
-        private int currentQuestion = 0;
-        private int currentTime = 0;
-        ExamSession exam = new ExamSession();
+        private List<string> responses;
+        private int currentQuestion;
+        private int currentTime;
+        ExamSession exam;
+
+        private void NewSession()
+        {
+            responses = new List<string>();
+            currentQuestion = 1;
+            currentTime = 0;
+            exam = new ExamSession();
+
+            dgvResponses.Rows.Clear();
+            dgvResponses.Refresh();
+
+            dgvResponses.Rows.Add((currentQuestion).ToString(), "");
+            btnStartStop.Text = "Start";
+
+            UpdateSessionInfo();
+        }
 
         public FormApp()
         {
             InitializeComponent();
+            NewSession();
         }
 
-        private void UpdateTime()
+        private void UpdateSessionInfo()
         {
             lbTime.Text = $"Time |  {currentTime / 60 / 60:0} : {currentTime / 60 % 60:00} : {currentTime % 60:00}";
+            lbSessionInfo.Text = $"Question {currentQuestion} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
         }
         
-        private void AppendResponse(string option)
+        private void InsertResponse(string option)
         {
             responses.Add(option);
 
             if (dgvResponses.Rows.Count > currentQuestion)
             {
                 dgvResponses.CurrentRow.Cells[1].Value = option;
-                dgvResponses.CurrentCell = dgvResponses[0, ++currentQuestion];
+                dgvResponses.CurrentCell = dgvResponses[0, currentQuestion++];
 
                 dgvResponses.FirstDisplayedScrollingRowIndex = currentQuestion - (currentQuestion < 23 ? currentQuestion : 23);
             }
             else
             {
-                dgvResponses.Rows.Add((++currentQuestion).ToString(), option);
-
-                dgvResponses.FirstDisplayedScrollingRowIndex = currentQuestion;
+                dgvResponses.CurrentRow.Cells[1].Value = option;
+                dgvResponses.Rows.Add((++currentQuestion).ToString(), "");
+                dgvResponses.CurrentCell = dgvResponses[0, currentQuestion - 1];
             }
-            lbSessionInfo.Text = $"Question {currentQuestion + 1} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
+
+            UpdateSessionInfo();
         }
 
         private void dgvResponses_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            currentQuestion = dgvResponses.CurrentCell.RowIndex;
-            lbSessionInfo.Text = $"Question {currentQuestion + 1} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
+            currentQuestion = dgvResponses.CurrentCell.RowIndex + 1;
+            UpdateSessionInfo();
+        }
+
+        private void ToggleOptionBtns(bool enabled)
+        {
+            btnOption1.Enabled = enabled;
+            btnOption2.Enabled = enabled;
+            btnOption3.Enabled = enabled;
+            btnOption4.Enabled = enabled;
+            btnOption5.Enabled = enabled;
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
@@ -61,13 +89,9 @@ namespace AnswerRecorder
             {
                 case "Start":
                     pdfViewer.Enabled = true;
-                    timer.Start();
 
-                    btnOption1.Enabled = true;
-                    btnOption2.Enabled = true;
-                    btnOption3.Enabled = true;
-                    btnOption4.Enabled = true;
-                    btnOption5.Enabled = true;
+                    timer.Start();
+                    ToggleOptionBtns(true);
 
                     btnStartStop.Text = "Done";
                     btnCheck.Enabled = true;
@@ -75,28 +99,13 @@ namespace AnswerRecorder
 
                 case "Done":
                     timer.Stop();
-
-                    btnOption1.Enabled = false;
-                    btnOption2.Enabled = false;
-                    btnOption3.Enabled = false;
-                    btnOption4.Enabled = false;
-                    btnOption5.Enabled = false;
+                    ToggleOptionBtns(false);
 
                     btnStartStop.Text = "Reset";
                     break;
 
                 case "Reset":
-                    currentTime = 0;
-                    currentQuestion = 1;
-                    UpdateTime();
-                    lbSessionInfo.Text = $"Question {currentQuestion}";
-
-                    dgvResponses.Rows.Clear();
-                    dgvResponses.Refresh();
-
-                    responses.Clear();
-
-                    btnStartStop.Text = "Start";
+                    NewSession();
                     break;
 
                 default:
@@ -107,33 +116,12 @@ namespace AnswerRecorder
         private void Timer_Tick(object sender, EventArgs e)
         {
             currentTime += timer.Interval / 1000;
-            UpdateTime();
+            UpdateSessionInfo();
         }
         
-        private void btnOption1_Click_1(object sender, EventArgs e)
+        private void HandleBtnOption_Click(object sender, EventArgs e)
         {
-            AppendResponse(btnOption1.Text);
-        }
-
-
-        private void btnOption2_Click_1(object sender, EventArgs e)
-        {
-            AppendResponse(btnOption2.Text);
-        }
-
-        private void btnOption3_Click_1(object sender, EventArgs e)
-        {
-            AppendResponse(btnOption3.Text);
-        }
-
-        private void btnOption4_Click_1(object sender, EventArgs e)
-        {
-            AppendResponse(btnOption4.Text);
-        }
-
-        private void btnOption5_Click_1(object sender, EventArgs e)
-        {
-            AppendResponse(btnOption5.Text);
+            InsertResponse(((Button)sender).Text);
         }
 
         private void LoadExam()
@@ -155,20 +143,15 @@ namespace AnswerRecorder
 
                 if (exam.NumQuestions > 0)
                 {
-                    for (int i = 1; i <= exam.NumQuestions; i++)
+                    for (int i = 2; i <= exam.NumQuestions; i++)
                         dgvResponses.Rows.Add(i.ToString(), "");
                 }
             }
 
-            lbSessionInfo.Text = $"Question {currentQuestion + 1} { (exam.NumQuestions >= currentQuestion ? "/ " + exam.NumQuestions : "") }";
+            UpdateSessionInfo();
         }
 
-        private void loadExamToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LoadExam();
-        }
-
-        private void btnLoadExam_Click(object sender, EventArgs e)
+        private void HandleLoadExam_Click(object sender, EventArgs e)
         {
             LoadExam();
         }
@@ -240,7 +223,7 @@ namespace AnswerRecorder
             using (var client = new WebClient())
             {
                 //client.Credentials = new NetworkCredential("", "Wyse2014");
-                client.DownloadFile("https://wyse.engineering.illinois.edu/files/2015/01/CompSci_Sectional2016.pdf", "CompSci_Sectional2016.pdf");
+                client.DownloadFile("https://wyse.engineering.illinois.edu/files/2014/12/2003regcomscitest.pdf", @"Exams\WYSE\Computer Science\Regional\2003\2003regcomscitest.pdf");
             }
         }
 
