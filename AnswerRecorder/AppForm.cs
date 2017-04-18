@@ -236,11 +236,14 @@ namespace AnswerRecorder
 
         private void retrieveExamFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var client = new WebClient())
-            {
-                //client.Credentials = new NetworkCredential("", "Wyse2014");
-                client.DownloadFile("https://wyse.engineering.illinois.edu/files/2014/12/2003regcomscitest.pdf", @"Exams\WYSE\Computer Science\Regional\2003\2003regcomscitest.pdf");
-            }
+            ExamManager examManagerPopup = new ExamManager();
+            examManagerPopup.ShowDialog();
+
+            //using (var client = new WebClient())
+            //{
+            //    //client.Credentials = new NetworkCredential("", "Wyse2014");
+            //    client.DownloadFile("https://wyse.engineering.illinois.edu/files/2014/12/2003regcomscitest.pdf", @"Exams\WYSE\Computer Science\Regional\2003\2003regcomscitest.pdf");
+            //}
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

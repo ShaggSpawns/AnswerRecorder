@@ -53,6 +53,7 @@
             this.rbSAT = new System.Windows.Forms.RadioButton();
             this.rbWYSE = new System.Windows.Forms.RadioButton();
             this.flowRdBtns = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbCustomExam.SuspendLayout();
             this.flowRdBtns.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +86,7 @@
             // 
             // gbCustomExam
             // 
+            this.gbCustomExam.Controls.Add(this.label1);
             this.gbCustomExam.Controls.Add(this.tbNumSections);
             this.gbCustomExam.Controls.Add(this.lbNumSections);
             this.gbCustomExam.Controls.Add(this.tbChoiceSequence);
@@ -107,7 +109,7 @@
             // 
             // tbNumSections
             // 
-            this.tbNumSections.Location = new System.Drawing.Point(127, 143);
+            this.tbNumSections.Location = new System.Drawing.Point(127, 159);
             this.tbNumSections.Name = "tbNumSections";
             this.tbNumSections.Size = new System.Drawing.Size(30, 20);
             this.tbNumSections.TabIndex = 10;
@@ -115,7 +117,7 @@
             // lbNumSections
             // 
             this.lbNumSections.AutoSize = true;
-            this.lbNumSections.Location = new System.Drawing.Point(13, 146);
+            this.lbNumSections.Location = new System.Drawing.Point(13, 162);
             this.lbNumSections.Name = "lbNumSections";
             this.lbNumSections.Size = new System.Drawing.Size(100, 13);
             this.lbNumSections.TabIndex = 9;
@@ -152,7 +154,7 @@
             // checkbMultiSelect
             // 
             this.checkbMultiSelect.AutoSize = true;
-            this.checkbMultiSelect.Location = new System.Drawing.Point(176, 212);
+            this.checkbMultiSelect.Location = new System.Drawing.Point(163, 231);
             this.checkbMultiSelect.Name = "checkbMultiSelect";
             this.checkbMultiSelect.Size = new System.Drawing.Size(154, 17);
             this.checkbMultiSelect.TabIndex = 5;
@@ -171,7 +173,7 @@
             // tbNumChoices
             // 
             this.tbNumChoices.Enabled = false;
-            this.tbNumChoices.Location = new System.Drawing.Point(127, 210);
+            this.tbNumChoices.Location = new System.Drawing.Point(127, 228);
             this.tbNumChoices.MaxLength = 1;
             this.tbNumChoices.Name = "tbNumChoices";
             this.tbNumChoices.Size = new System.Drawing.Size(30, 20);
@@ -179,7 +181,7 @@
             // 
             // tbNumQuestions
             // 
-            this.tbNumQuestions.Location = new System.Drawing.Point(127, 176);
+            this.tbNumQuestions.Location = new System.Drawing.Point(127, 196);
             this.tbNumQuestions.Name = "tbNumQuestions";
             this.tbNumQuestions.Size = new System.Drawing.Size(64, 20);
             this.tbNumQuestions.TabIndex = 3;
@@ -199,7 +201,7 @@
             // 
             this.lbNumChoices.AutoSize = true;
             this.lbNumChoices.Enabled = false;
-            this.lbNumChoices.Location = new System.Drawing.Point(13, 213);
+            this.lbNumChoices.Location = new System.Drawing.Point(13, 231);
             this.lbNumChoices.Name = "lbNumChoices";
             this.lbNumChoices.Size = new System.Drawing.Size(108, 13);
             this.lbNumChoices.TabIndex = 1;
@@ -208,7 +210,7 @@
             // lbNumQuestions
             // 
             this.lbNumQuestions.AutoSize = true;
-            this.lbNumQuestions.Location = new System.Drawing.Point(13, 179);
+            this.lbNumQuestions.Location = new System.Drawing.Point(13, 199);
             this.lbNumQuestions.Name = "lbNumQuestions";
             this.lbNumQuestions.Size = new System.Drawing.Size(106, 13);
             this.lbNumQuestions.TabIndex = 0;
@@ -225,7 +227,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(48, 388);
+            this.btnCancel.Location = new System.Drawing.Point(48, 383);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(101, 40);
             this.btnCancel.TabIndex = 4;
@@ -235,7 +237,7 @@
             // 
             // btnDone
             // 
-            this.btnDone.Location = new System.Drawing.Point(201, 388);
+            this.btnDone.Location = new System.Drawing.Point(201, 383);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(101, 40);
             this.btnDone.TabIndex = 9;
@@ -305,11 +307,20 @@
             this.flowRdBtns.TabIndex = 18;
             this.flowRdBtns.WrapContents = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 134);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Time";
+            // 
             // FormLoadExam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 435);
+            this.ClientSize = new System.Drawing.Size(356, 435);
             this.Controls.Add(this.flowRdBtns);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnCancel);
@@ -358,5 +369,6 @@
         private System.Windows.Forms.RadioButton rbSAT;
         private System.Windows.Forms.RadioButton rbWYSE;
         private System.Windows.Forms.FlowLayoutPanel flowRdBtns;
+        private System.Windows.Forms.Label label1;
     }
 }
